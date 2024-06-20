@@ -1,5 +1,6 @@
 ---@diagnostic disable: undefined-global
 vim.g.kodnotes_root = vim.g.kodnotes_root or vim.fn.expand("~/notes")
+vim.g.kodnotes_prefix = vim.g.kodnotes_prefix or "<leader>k"
 vim.api.nvim_create_autocmd({"BufEnter",},
 	{
 		pattern = vim.g.kodnotes_root .. "/*.md",
@@ -28,7 +29,7 @@ vim.api.nvim_create_user_command("KodnotesInsertLink", function()
 				local action_state = require("telescope.actions.state")
 				local selection = action_state.get_selected_entry()
 				require("telescope.actions").close(bufnr)
-				vim.fn.setreg("m", selection.filename)
+				vim.fn.setreg("m", "[[" .. string.match(selection.filename, "%d+") .. "]]")
 				vim.api.nvim_command("norm \"mp")
 			end)
 			return true
