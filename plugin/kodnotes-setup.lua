@@ -20,6 +20,17 @@ vim.api.nvim_create_user_command("KodnotesNewNote", function ()
 	vim.api.nvim_command(table.concat({"edit ", vim.g.kodnotes_root, "/", os.date("!%Y%m%d%H%M%S"), ".md"}))
 end, {})
 
+vim.api.nvim_create_user_command("KodnotesNewNoteDir", function (opts)
+	local buf = vim.api.nvim_create_buf(true,false)
+	vim.api.nvim_win_set_buf(0, buf)
+	-- TODO: replace with nvim_cmd
+	vim.api.nvim_command(table.concat({"edit ", vim.g.kodnotes_root, "/", opts.fargs[1], "/", os.date("!%Y%m%d%H%M%S"), ".md"}))
+end, {nargs = 1})
+
+vim.api.nvim_create_user_command("KodnotesNewLitNote", function ()
+	vim.api.nvim_command("KodnotesNewNoteDir references")
+end, {})
+
 vim.api.nvim_create_user_command("KodnotesInsertLink", function()
 	require("telescope.builtin").live_grep({
 		cwd = vim.g.kodnotes_root,
