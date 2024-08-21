@@ -28,7 +28,7 @@ vim.api.nvim_create_user_command("KodnotesNewNoteDir", function (opts)
 end, {nargs = 1})
 
 vim.api.nvim_create_user_command("KodnotesNewLitNote", function ()
-	vim.api.nvim_command("KodnotesNewNoteDir references")
+	vim.api.nvim_command("KodnotesNewNoteDir literature_notes")
 end, {})
 
 vim.api.nvim_create_user_command("KodnotesInsertLink", function()

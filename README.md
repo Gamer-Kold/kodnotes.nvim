@@ -17,6 +17,6 @@ The plugin creates these commands:
 **:KodnotesNewNote** creates a new note; with the current time as title
 **:KodnotesFollowLink** follows a [[link]] under the cursor
 **:KodnotesInsertLink** allows you to search your notes and insert a link to a particular one
-**:KodnotesNewNoteDir** allows you to make a new note under the specificied directory.
-**:KodnotesNewLitNote** allows you to make a new note under references (a utility command for my system)
+**:KodnotesNewNoteDir** allows you to make a new note under the specificied subdirectory.
+**:KodnotesNewLitNote** allows you to make a new note under the "literature_notes" subdirectory (a utility command for my system)
 
