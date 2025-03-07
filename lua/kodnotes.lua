@@ -1,11 +1,5 @@
 local M = {}
 
-function M.setup(config) 
-	vim.api.nvim_create_augroup("kodnotes", {clear = true})
-	for key, dir in pairs(config.dirs) do
-		do_autocmds(vim.fn.expand(dir), config.prefix)
-	end
-end
 
 local function do_autocmds(dir, prefix)
 	vim.api.nvim_create_autocmd({"BufEnter",},
@@ -20,14 +14,12 @@ local function do_autocmds(dir, prefix)
 				vim.api.nvim_create_user_command("KodnotesNewNote", function ()
 					local buf = vim.api.nvim_create_buf(true,false)
 					vim.api.nvim_win_set_buf(0, buf)
-					-- TODO: replace with nvim_cmd
 					vim.api.nvim_command(table.concat({"edit ", dir, "/", os.date("!%Y%m%d%H%M%S"), ".md"}))
 				end, {})
 
 				vim.api.nvim_create_user_command("KodnotesNewNoteDir", function (opts)
 					local buf = vim.api.nvim_create_buf(true,false)
 					vim.api.nvim_win_set_buf(0, buf)
-					-- TODO: replace with nvim_cmd
 					vim.api.nvim_command(table.concat({"edit ", dir, "/", opts.fargs[1], "/", os.date("!%Y%m%d%H%M%S"), ".md"}))
 				end, {nargs = 1})
 
@@ -52,16 +44,22 @@ local function do_autocmds(dir, prefix)
 					})
 				end, {})
 				vim.api.nvim_create_user_command("KodnotesFollowLink", function()
-					vim.api.nvim_command("normal /]]<CR>%\"myi]")
+					vim.api.nvim_command("normal \"myi]")
 					local note_name = vim.fn.getreg('m')
 					if vim.fn.filereadable(dir .. "/" .. note_name .. ".md") then
 						vim.api.nvim_command("edit " .. dir .. "/" .. note_name .. ".md")
+					elseif vim.fn.filereadable(dir .. "/" .. note_name) then
 					end
 				end, {})
 			end,
-			group = "kodnotes"
+			group = "kodnotes",
 		})
-
 end
 
+function M.setup(config) 
+	vim.api.nvim_create_augroup("kodnotes", {clear = true})
+	for key, dir in pairs(config.dirs) do
+		do_autocmds(vim.fn.expand(dir), config.prefix)
+	end
+end
 return M
