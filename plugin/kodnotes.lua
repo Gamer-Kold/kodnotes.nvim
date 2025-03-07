@@ -3,7 +3,7 @@ local M = {}
 function M.setup(config) 
 	vim.api.nvim_create_augroup("kodnotes", {clear = true})
 	for key, dir in pairs(config.dirs) do
-		do_autocmds(dir, config.prefix)
+		do_autocmds(vim.fn.expand(dir), config.prefix)
 	end
 end
 
